@@ -1,0 +1,31 @@
+EC2 (Elastic Cloud Compute)
+### Setup
+- **VPC:** Virtual data center in the cloud
+    - Deploy all EC2 instances into a VPC
+- **AMI:** Using Amazon Linux AMI because it includes stuff to connect to AWS
+- **Instance:** Choosing t2.micro because it's usually used to test in dev
+- **Instance Details:**
+    - **Network:** Keep default VPC
+    - **Subnet:** Choose which availability zone you want to be put into
+    - **Auto-assign Public IP:** Allows you to assign a public IP so you can SSH into instance
+    - **Shutdown behavior:** Choose what happens if your EC2 instance turns out (stop or have Amazon terminate for you)
+    - **Enable termination protection:** Prevents people from accidentally shutting down your instance
+- **Storage:**
+    - 8GB is default
+    - **Volume Type:** General purpose is most common, Provisioned IOPS lets you choose a very fast disk (database server), Magnetic is a very slow disk (file server)
+- **Tags:** Allow us to add tags like Department and Employee ID to help with cost tracking later on
+- **Security Group:** Virtual firewall in the cloud
+    - Open ports like 22 for SSH or 3389 for RDP (Windows) or 80 for HTTP
+
+### Connect to the EC2 server
+- Open Terminal
+- `chmod 400 MyVirginiaKP.pem` - Protects file from accidental overwriting
+- `ssh ec2-user@54.242.147.206 -i MyVirginiaKP.pem` to connect
+- `sudo su` for root
+- `yum update` to update security patches
+
+### Exam Tips
+- EC2 is compute-based, it's not serverless. It is a server!
+- Use private key to connect to EC2
+- Security groups are virtual firewalls in the cloud. Need to open ports in order to use them (22 for SSH, 80 for HTTP, 443 for HTTPS, 3389 for RDP)
+- Always design for failure, have one EC2 instance in each availability zone
